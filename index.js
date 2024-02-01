@@ -25,6 +25,7 @@ routes(app);
 // Cron Job for changing task priority
 schedule.scheduleJob('0 0 * * * *', async () => {
   try {
+    console.log('Running cron job to update task priority');
     // Find tasks with due_date greater than or equal to the current date
     const overdueTasks = await Task.find({ due_date: { $gte: Date.now() }, isDeleted: false});
     
@@ -44,8 +45,9 @@ schedule.scheduleJob('0 0 * * * *', async () => {
 });
 
 // Cron Logic for voice call using twilio
-schedule.scheduleJob('*/50 * * * * *', async () => {
+schedule.scheduleJob('0 0 * * * *', async () => {
   try {
+    console.log('Running cron job to make Twilio voice call');
     // Get tasks that have passed their due_date and are not marked as done
     const overdueTasks = await Task.find({ due_date: { $lte: Date.now() }, status: 'TODO' })
       .populate('user', 'phoneNumber priority')
@@ -56,11 +58,9 @@ schedule.scheduleJob('*/50 * * * * *', async () => {
     for (const task of overdueTasks) {
       const user = task.user;
       console.log({user});
+
       // Make Twilio voice call to the user with the highest priority
       await callUser(user, task.name)
-
-      // Assuming you want to call one user at a time and break the loop if the call is successful
-      // break;
     }
 
 

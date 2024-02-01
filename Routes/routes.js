@@ -9,6 +9,7 @@ const UpdateSubtask = require('../Controller/UpdateSubtask');
 const DeleteTask = require('../Controller/DeleteTask');
 const DeleteSubTask = require('../Controller/DeleteSubTask');
 const AllUserTask = require('../Controller/AllUserTask');
+const AllUserSubtask = require('../Controller/AllUserSubtask');
 
 const routes = (app)=>{
   const router = express.Router();
@@ -20,7 +21,7 @@ const routes = (app)=>{
 
   // ---------- User Task Routes -----------
   router.get('/all-task', jwtAuth, AllUserTask);
-  router.get('/all-subtask', jwtAuth, AllUserTask);
+  router.get('/all-subtask', jwtAuth, AllUserSubtask);
 
 
   // --------- Task Routes -------------

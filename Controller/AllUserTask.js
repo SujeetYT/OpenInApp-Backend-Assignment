@@ -18,7 +18,7 @@ const AllUserTask = async (req, res, next) => {
       query.due_date = Number(dueDate);
     }
 
-    console.log({ query });
+    // console.log({ query });
 
     const alltasks = await Task.find(query)
       .skip(skip)
